@@ -2,7 +2,7 @@ let socket = io();
 
 function init(roomName) {
   socket.emit('join_room', {'roomName': roomName});
-  socket.on('joined_room', (data) => { print('Room "' + data.roomName + '" joined') });
+  socket.on('joined_room', (data) => { print('Room "' + data.roomName + '" joined, '+ data.totalConnections +' total connections.'); });
 }
 
 function connect(calling) {

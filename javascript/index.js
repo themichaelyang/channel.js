@@ -10,5 +10,6 @@ function main() {
   enter.addEventListener('click', (event) => {
     let roomName = roomNameInput.value;
     init(roomName);
+    enter.disabled = true;
   });
 }

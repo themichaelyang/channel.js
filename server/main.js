@@ -19,9 +19,15 @@ let io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
   socket.on('join_room', (data) => {
-    socket.join(data.roomName);
-    console.log(socket.id + ' joined room "' + data.roomName + '"');
-    socket.emit('joined_room', data);
+    let name = data.roomName;
+    if (Object.keys(socket.rooms).length === 1) {
+      socket.join(name);
+      console.log(socket.id + ' joined room "' + name + '"');
+      let totalConnections = io.sockets.adapter.rooms[name].length;
+      let response = Object.assign({}, data);
+      response.totalConnections = totalConnections;
+      socket.emit('joined_room', response);
+    }
   });
 
   // should check if socket is in room
@@ -33,6 +39,7 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('remote_ICE_candidate', data);
   })
 });
+
 
 server.listen(PORT);
 console.log('Listening on: ' + PORT);
