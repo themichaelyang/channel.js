@@ -9,7 +9,14 @@ function main() {
   };
   enter.addEventListener('click', (event) => {
     let roomName = roomNameInput.value;
-    init(roomName);
+    joinRoom(roomName).then((isCaller) => {
+      if (isCaller) {
+        connect(true);
+      }
+      else {
+        connect(false);
+      }
+    });
     enter.disabled = true;
   });
 }

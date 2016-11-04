@@ -1,8 +1,19 @@
 let socket = io();
 
-function init(roomName) {
-  socket.emit('join_room', {'roomName': roomName});
-  socket.on('joined_room', (data) => { print('Room "' + data.roomName + '" joined, '+ data.totalConnections +' total connections.'); });
+function joinRoom(roomName) {
+  return new Promise((resolve, reject) => {
+    socket.emit('join_room', {'roomName': roomName});
+
+    let connectionTimeoutID = setTimeout(() => {
+      reject();
+    }, 2000); // make this value configurable
+    socket.on('joined_room', (data) => {
+      print('Room "' + data.roomName + '" joined, '+ data.totalConnections +' total connections.');
+      clearTimeout(connectionTimeoutID);
+      let isCaller = (data.totalConnections === 2);
+      resolve(isCaller);
+    });
+  });
 }
 
 function connect(calling) {
