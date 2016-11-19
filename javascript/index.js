@@ -4,6 +4,7 @@ function main() {
   let enter = document.getElementById('connect-button');
   let roomNameInput = document.getElementById('room-name-input');
   let form = document.getElementById('form');
+  window.channel = new Channel();
   form.onsubmit = (event) => {
     event.preventDefault();
   };
@@ -11,10 +12,10 @@ function main() {
     let roomName = roomNameInput.value;
     joinRoom(roomName).then((isCaller) => {
       if (isCaller) {
-        connect(true);
+        window.channel.connect(true);
       }
       else {
-        connect(false);
+        window.channel.connect(false);
       }
     });
     enter.disabled = true;

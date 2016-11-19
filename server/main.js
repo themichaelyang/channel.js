@@ -20,10 +20,12 @@ let io = require('socket.io')(server);
 io.on('connection', (socket) => {
   socket.on('join_room', (data) => {
     let name = data.roomName;
-    if (Object.keys(socket.rooms).length === 1) {
+    let room = io.sockets.adapter.rooms[name];
+    let totalConnections = room ? room.length : 0;
+    if (Object.keys(socket.rooms).length === 1 && totalConnections <= 1) {
       socket.join(name);
+      totalConnections++;
       console.log(socket.id + ' joined room "' + name + '"');
-      let totalConnections = io.sockets.adapter.rooms[name].length;
       let response = Object.assign({}, data);
       response.totalConnections = totalConnections;
       socket.emit('joined_room', response);

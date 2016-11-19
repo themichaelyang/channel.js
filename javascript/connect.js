@@ -6,7 +6,7 @@ function joinRoom(roomName) {
 
     let connectionTimeoutID = setTimeout(() => {
       reject();
-    }, 2000); // make this value configurable
+    }, 10000); // make this value configurable
     socket.on('joined_room', (data) => {
       print('Room "' + data.roomName + '" joined, '+ data.totalConnections +' total connections.');
       clearTimeout(connectionTimeoutID);
@@ -28,7 +28,6 @@ function connect(calling) {
     let channel = connection.createDataChannel("", config.channel);
     // print(channel);
     bindDataChannelHandlers(channel);
-
     makeOffer(connection);
   }
   else {
@@ -73,7 +72,8 @@ function receiveSessionDescription(connection, receivedDescription) {
   .then(() => {
     print('Received and set remoteDescription');
     // print(connection.localDescription);
-    if (!isEmptyDescription(connection.localDescription)) { // technically should be null before set, according to spec
+    if (!isEmptyDescription(connection.localDescription)) {
+      // technically should be null before set, according to spec
       // if theres local desc, should be caller
       // idk what it should do tbh
       // print('Should be connected if ICE is done');
@@ -112,6 +112,6 @@ function isEmptyDescription(description) {
   return !(description.type && description.sdp);
 }
 
-function print(str) {
-  console.log(str);
+function print(...str) {
+  console.log(...str);
 }
