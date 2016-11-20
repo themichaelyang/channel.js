@@ -44,8 +44,6 @@ function connect(calling) {
 function makeOffer(connection) {
   connection.createOffer(config.offer)
   .then(offer => {
-    // patchSDP(offer); // increase throughput
-    // print(offer);
     return connection.setLocalDescription(offer)
   })
   .then(() => sendSessionDescription(connection.localDescription))
