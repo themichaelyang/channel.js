@@ -2,7 +2,7 @@
   function createChannel() {
     let channel = {};
     channel.config;
-    channel.datachannel;
+    channel.dataChannel;
     channel.roomName;
     channel.peerConnection;
 
@@ -62,7 +62,8 @@
           bindICECandidateHandlers(channel.peerConnection);
           return brokerConnection(isCaller);
         }).then((dataChannel) => { // on opened
-          return dataChannel;
+          channel.dataChannel = dataChannel;
+          resolve(dataChannel);
         });
       });
     };

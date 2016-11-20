@@ -19,7 +19,10 @@ function main() {
     //   }
     // });
 
-    channel.connect(roomName);
+    channel.connect(roomName).then((dataChannel) => {
+      dataChannel.send("what's up");
+      console.log(dataChannel);
+    });
     enter.disabled = true;
   });
 }
