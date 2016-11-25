@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
       console.log(socket.id + ' joined room "' + name + '"');
       let response = Object.assign({}, data);
       response.totalConnections = totalConnections;
+      response.clientId = socket.id;
       socket.emit('joined_room', response);
     }
   });
