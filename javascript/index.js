@@ -10,14 +10,6 @@ function main() {
   };
   enter.addEventListener('click', (event) => {
     let roomName = roomNameInput.value;
-    // joinRoom(roomName).then((isCaller) => {
-    //   if (isCaller) {
-    //     window.channel.connect(true);
-    //   }
-    //   else {
-    //     window.channel.connect(false);
-    //   }
-    // });
 
     channel.on('message', (message) => {
       console.log(message.data);
