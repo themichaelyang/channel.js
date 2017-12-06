@@ -220,9 +220,14 @@
 
   // use a traditional constructor function
   // to use same prototype object, save memory
+  // window.Channel = function(config) {
+    // let obj = Object.create(channel);
+    // obj.init(config);
+    // return obj;
+  // };
   window.Channel = function(config) {
-    let obj = Object.create(channel);
-    obj.init(config);
-    return obj;
-  };
+    this.init(config);
+  }
+
+  window.Channel.prototype = channel;
 }());
